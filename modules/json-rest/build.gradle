@@ -1,5 +1,8 @@
 dependencies {
+    compile 'com.wizzardo:http:0.1+'
 }
+
+mainClassName = "com.wizzardo.examples.jsonrest.App"
 
 archivesBaseName = "json-rest"
 ext {
