@@ -1,14 +1,26 @@
-apply plugin: 'java'
-apply plugin: 'application'
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'application'
 
-repositories {
-    jcenter()
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    group = "com.wizzardo.examples"
+    version = '0.1'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    test {
+        testLogging {
+            events "failed"
+            exceptionFormat "full"
+        }
+        maxHeapSize = "1g"
+    }
 }
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-version = '0.1'
 
 mainClassName = "App"
 
@@ -17,6 +29,7 @@ dependencies {
     //        'lib-1.jar',
     //        'lib-2.jar'
     //)
+    compile project(':modules:json-rest')
 }
 
 //create a single Jar with all dependencies
