@@ -33,6 +33,11 @@ public class EmployeeRestController extends RestHandler {
             data.put(employee.id, employee);
             return employee;
         };
+        post = (JsonResponseHandler) (request, response) -> {
+            Employee employee = JsonTools.parse(request.getBody().bytes(), Employee.class);
+            data.put(employee.id, employee);
+            return employee;
+        };
     }
 
     private interface JsonResponseHandler extends Handler {
