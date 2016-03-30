@@ -38,6 +38,9 @@ public class EmployeeRestController extends RestHandler {
             data.put(employee.id, employee);
             return employee;
         };
+        delete = (JsonResponseHandler) (request, response) -> {
+            return data.remove(request.params().getInt("id", -1));
+        };
     }
 
     private interface JsonResponseHandler extends Handler {
