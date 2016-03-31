@@ -28,10 +28,6 @@ allprojects {
 mainClassName = "App"
 
 dependencies {
-	//compile files(
-    //        'lib-1.jar',
-    //        'lib-2.jar'
-    //)
     compile project(':modules:json-rest')
 }
 

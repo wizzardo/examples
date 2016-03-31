@@ -1,5 +1,7 @@
 dependencies {
     compile 'com.wizzardo:http:0.1+'
+
+    testCompile 'junit:junit:4.12'
 }
 
 mainClassName = "com.wizzardo.examples.jsonrest.App"
