@@ -20,27 +20,25 @@ public class EmployeeRestController extends RestHandler {
     private Map<Integer, Employee> data = new HashMap<>();
 
     public EmployeeRestController() {
-        get = (JsonResponseHandler) (request, response) -> {
+        get((JsonResponseHandler) (request, response) -> {
             int id = request.params().getInt("id", -1);
             if (id != -1)
                 return data.get(id);
             else
                 return data.values();
-        };
-        put = (JsonResponseHandler) (request, response) -> {
+        });
+        put((JsonResponseHandler) (request, response) -> {
             Employee employee = JsonTools.parse(request.getBody().bytes(), Employee.class);
             employee.id = data.size();
             data.put(employee.id, employee);
             return employee;
-        };
-        post = (JsonResponseHandler) (request, response) -> {
+        });
+        post((JsonResponseHandler) (request, response) -> {
             Employee employee = JsonTools.parse(request.getBody().bytes(), Employee.class);
             data.put(employee.id, employee);
             return employee;
-        };
-        delete = (JsonResponseHandler) (request, response) -> {
-            return data.remove(request.params().getInt("id", -1));
-        };
+        });
+        delete((JsonResponseHandler) (request, response) -> data.remove(request.params().getInt("id", -1)));
     }
 
     private interface JsonResponseHandler extends Handler {
