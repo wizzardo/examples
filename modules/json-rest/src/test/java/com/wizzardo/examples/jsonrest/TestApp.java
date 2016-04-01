@@ -74,4 +74,20 @@ public class TestApp {
         Assert.assertEquals(null, responseEmployee);
     }
 
+    @Test
+    public void postEmployee() throws IOException {
+        Employee employee = createEmployee();
+        employee.name = "new name";
+
+        String response = new Request(serverUrl + "/" + employee.id)
+                .json(JsonTools.serialize(employee))
+                .post()
+                .asString();
+
+        Employee responseEmployee = JsonTools.parse(response, Employee.class);
+
+        Assert.assertEquals(employee.id, responseEmployee.id);
+        Assert.assertEquals(employee.name, responseEmployee.name);
+        Assert.assertEquals(employee.createdDate, responseEmployee.createdDate);
+    }
 }
