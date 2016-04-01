@@ -47,10 +47,31 @@ public class TestApp {
 
         Employee responseEmployee = JsonTools.parse(response, Employee.class);
 
-        Assert.assertTrue(responseEmployee.id >= 0);
         Assert.assertEquals(employee.id, responseEmployee.id);
         Assert.assertEquals(employee.name, responseEmployee.name);
         Assert.assertEquals(employee.createdDate, responseEmployee.createdDate);
+    }
+
+    @Test
+    public void deleteEmployee() throws IOException {
+        Employee employee = createEmployee();
+
+        String response = new Request(serverUrl + "/" + employee.id)
+                .delete()
+                .asString();
+
+        Employee responseEmployee = JsonTools.parse(response, Employee.class);
+
+        Assert.assertEquals(employee.id, responseEmployee.id);
+        Assert.assertEquals(employee.name, responseEmployee.name);
+        Assert.assertEquals(employee.createdDate, responseEmployee.createdDate);
+
+        response = new Request(serverUrl + "/" + employee.id)
+                .get()
+                .asString();
+
+        responseEmployee = JsonTools.parse(response, Employee.class);
+        Assert.assertEquals(null, responseEmployee);
     }
 
 }
