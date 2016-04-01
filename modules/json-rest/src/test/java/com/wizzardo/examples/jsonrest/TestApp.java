@@ -17,9 +17,9 @@ public class TestApp {
 
     String serverUrl = "http://localhost:8080/rest/employees";
 
-    @Test
-    public void createEmployee() throws IOException {
+    public Employee createEmployee() throws IOException {
         Employee employee = With.with(new Employee(), it -> {
+            it.id = -1;
             it.name = "test employee";
             it.createdDate = new Date();
         });
@@ -32,6 +32,23 @@ public class TestApp {
         Employee responseEmployee = JsonTools.parse(response, Employee.class);
 
         Assert.assertTrue(responseEmployee.id >= 0);
+        Assert.assertEquals(employee.name, responseEmployee.name);
+        Assert.assertEquals(employee.createdDate, responseEmployee.createdDate);
+        return responseEmployee;
+    }
+
+    @Test
+    public void getEmployee() throws IOException {
+        Employee employee = createEmployee();
+
+        String response = new Request(serverUrl + "/" + employee.id)
+                .get()
+                .asString();
+
+        Employee responseEmployee = JsonTools.parse(response, Employee.class);
+
+        Assert.assertTrue(responseEmployee.id >= 0);
+        Assert.assertEquals(employee.id, responseEmployee.id);
         Assert.assertEquals(employee.name, responseEmployee.name);
         Assert.assertEquals(employee.createdDate, responseEmployee.createdDate);
     }
