@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by wizzardo on 31.03.16.
@@ -89,5 +90,19 @@ public class TestApp {
         Assert.assertEquals(employee.id, responseEmployee.id);
         Assert.assertEquals(employee.name, responseEmployee.name);
         Assert.assertEquals(employee.createdDate, responseEmployee.createdDate);
+    }
+
+    @Test
+    public void getAllEmployees() throws IOException {
+        createEmployee();
+        createEmployee();
+
+        String response = new Request(serverUrl + "/")
+                .get()
+                .asString();
+
+        List<Employee> list = JsonTools.parse(response, List.class, Employee.class);
+
+        Assert.assertTrue(list.size() >= 2);
     }
 }
